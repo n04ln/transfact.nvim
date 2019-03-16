@@ -34,32 +34,26 @@ func main() {
 
 					return "", nil
 				})
-			return nil
-		})
-
-	plugin.Main(
-		func(p *plugin.Plugin) error {
 			p.HandleFunction(
 				&plugin.FunctionOptions{Name: "Trans"},
 				// Translate args string.
 				func(v *nvim.Nvim, args []string) (string, error) {
 					nimvle := nimvle.New(v, "transfact")
-					nimvle.Log(0)
 					if len(args) != 1 {
 						nimvle.Log("args length is not 1")
-						nimvle.Log(1)
 						return "", nil
 					}
-					nimvle.Log(2)
+					if c.AppURL == "" {
+						nimvle.Log("URL is not specified")
+						return "", nil
+					}
 
 					text, err := translate(args[0])
 					if err != nil {
-						nimvle.Log(3)
 						nimvle.Log(err)
 						return "", nil
 					}
 					nimvle.Log(text)
-					nimvle.Log(4)
 
 					return "", nil
 				})
