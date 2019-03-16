@@ -19,7 +19,7 @@ call remote#host#RegisterPlugin('transfact.nvim', '0', [
 \ ])
 
 " for initialize
-call Initialize()
+call InitializeTransfact()
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
