@@ -14,7 +14,7 @@ endfunction
 
 call remote#host#Register('transfact.nvim', '0', function('s:Requiretransfact'))
 call remote#host#RegisterPlugin('transfact.nvim', '0', [
-\ {'type': 'function', 'name': 'Initialize', 'sync': 1, 'opts': {}},
+\ {'type': 'function', 'name': 'InitializeTransfact', 'sync': 1, 'opts': {}},
 \ {'type': 'function', 'name': 'Trans', 'sync': 1, 'opts': {}},
 \ ])
 

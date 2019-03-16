@@ -22,7 +22,7 @@ func main() {
 	plugin.Main(
 		func(p *plugin.Plugin) error {
 			p.HandleFunction(
-				&plugin.FunctionOptions{Name: "Initialize"},
+				&plugin.FunctionOptions{Name: "InitializeTransfact"},
 				// Setting from env variable.
 				func(v *nvim.Nvim, args []string) (string, error) {
 					nimvle := nimvle.New(v, "transfact")
@@ -44,17 +44,22 @@ func main() {
 				// Translate args string.
 				func(v *nvim.Nvim, args []string) (string, error) {
 					nimvle := nimvle.New(v, "transfact")
+					nimvle.Log(0)
 					if len(args) != 1 {
 						nimvle.Log("args length is not 1")
+						nimvle.Log(1)
 						return "", nil
 					}
+					nimvle.Log(2)
 
 					text, err := translate(args[0])
 					if err != nil {
+						nimvle.Log(3)
 						nimvle.Log(err)
 						return "", nil
 					}
 					nimvle.Log(text)
+					nimvle.Log(4)
 
 					return "", nil
 				})
