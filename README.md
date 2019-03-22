@@ -10,7 +10,7 @@ For translation(En-Ja) in NeoVim
 - GoogleAppsScript environment (under‐mentioned)
 - go >= 1.11
 
-## Usage
+## Installation
 ### 1. Setup GoogleAppsScript environment for your translation.
 This plugin will be used it.
 It is easy, please copy&paste the code from `google_app_script/code.gs` to your project.
@@ -27,3 +27,6 @@ Plug 'NoahOrberg/transfact.nvim'
 Finally, please execute `:PlugUpdate` on your NeoVim.
 ### 4. :tada: setup is completed!!!
 
+## Usage
+1. please select target using visual mode.
+2. stroke `<C-t>r`, show floating window with the texts.
