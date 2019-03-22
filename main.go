@@ -48,20 +48,19 @@ func main() {
 						return "", nil
 					}
 
-					text, err := translate(args[0])
+					text, err := translate(nimvle, args[0])
 					if err != nil {
 						nimvle.Log(err)
 						return "", nil
 					}
-					nimvle.Log(text)
 
-					return "", nil
+					return text, nil
 				})
 			return nil
 		})
 }
 
-func translate(text string) (string, error) {
+func translate(nimvle *nimvle.Nimvle, text string) (string, error) {
 	client := http.DefaultClient
 
 	u, err := url.Parse(c.AppURL)
@@ -73,6 +72,7 @@ func translate(text string) (string, error) {
 	q.Set("source", "en")
 	q.Set("target", "ja")
 	u.RawQuery = q.Encode()
+	nimvle.Log(u.RawQuery)
 
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {

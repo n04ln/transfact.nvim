@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-if exists('g:loaded_transfact')
+if !exists('g:loaded_transfact')
     finish
 endif
 let g:loaded_transfact = 1
@@ -8,48 +8,54 @@ let g:loaded_transfact = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! transfact#selected()
-    " to copy visual selected word
+function! transfact#translate(selected) range
+  return Trans(a:selected)
+endfunction
+
+function! transfact#open_floating_window() range
+  " to get text of visual selected
   let tmp = @@
   silent normal gvy
   let selected = @@
   let @@ = tmp
-  return selected
-endfunction
 
-function! transfact#translate()
-  let selected = call transfact#selected()
-  call Trans(selected)
-endfunction
+  let selected = substitute(selected, '\"', '\\"', 'g')
+  let selected = substitute(selected, "\'", "\\'", 'g')
+  let cmd = 'echo "' . selected . "\"| perl -pe 's/^ *\/\/(.*)$/$1/g; s/(.*?)\n/$1/g'"
+  echom cmd
+  let selected = system(cmd)
+  echom selected
 
-function! transfact#open_floating_window()
+  " to open floating window
   let bufnr = bufnr('%')
   let winnr = winbufnr(bufnr)
-  let wh = winheight(winnr)
-  let ww = winwidth(winnr)
-  let margin = 7
-
   if exists('g:transfact_buf')
     call nvim_open_win(g:transfact_buf, v:true, 200, 20, {'relative': 'editor', 'row': 7, 'col': 7})
   else
     " open floating window
     call nvim_open_win(bufnr, v:true, 200, 20, {'relative': 'editor', 'row': 7, 'col': 7})
     enew
-	  set buftype=nofile
-	  set bufhidden=hide
+    let g:transfact_buf = bufnr('%')
+	  setlocal buftype=nofile
+	  setlocal bufhidden=hide
 	  setlocal noswapfile
 	  setlocal nobuflisted
-    set undolevels=-1
-    let g:transfact = bufnr('%')
+    setlocal undolevels=-1
   endif
   
+  " checkout translation buffer
   execute ":b" . g:transfact_buf
-  execute "0," . line("$") . "delete"
 
-  let text = transfact#translate()
-  " execute ":normal i" . text
-  append('.', text)
+  " delete floating window buffer
+  let tmp = @@
+  execute "0," . line("$") . "delete"
+  let @@ = tmp
+
+  " write to translation buffer
+  let text = transfact#translate(selected)
+  execute "normal i" . text
 endfunction
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
