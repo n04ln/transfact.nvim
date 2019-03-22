@@ -1,3 +1,26 @@
 # transfact.nvim
+For translation(En-Ja) in NeoVim
 
-For translation in NeoVim
+## Requred
+- NeoVim > v0.4.0
+    - with floating window support
+- GoogleAppsScript environment (under‐mentioned)
+- go >= 1.11
+
+## Usage
+### 1. Setup GoogleAppsScript environment for your translation.
+This plugin will be used it.
+It is easy, please copy&paste the code from `google_app_script/code.gs` to your project.
+And it should be run.
+### 2. Install go binary.
+Some of this plugin is written in Go.
+So, please execute `go get -u github.com/NoahOrberg/transfact.nvim` on your terminal for installation of go binary.
+### 3. Install transfact.nvim to your NeoVim
+Finally, Install this plugin to your NeoVim.
+E.g, if you use `vim-plug`, please write below code to your `init.vim`
+```
+Plug 'NoahOrberg/transfact.nvim'
+```
+Finally, please execute `:PlugUpdate` on your NeoVim.
+### 4. :tada: setup is completed!!!
+
