@@ -79,6 +79,11 @@ function! transfact#modify_current_buffer(selected, text)
   call append('$', '*** translated')
   call append('$', a:text)
 
+  " delete blank line on the top
+  let tmp = @@
+  execute "0" . "delete"
+  let @@ = tmp
+
   " to NOT editable
   setlocal nomodifiable
 endfunction
