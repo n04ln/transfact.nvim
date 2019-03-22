@@ -28,6 +28,7 @@ function! transfact#remove_unncessary_chars(selected)
   let selected = a:selected
   let selected = substitute(selected, '\"', '\\"', 'g')
   let selected = substitute(selected, "\'", "\\'", 'g')
+  let selected = substitute(selected, "`", "\\`", 'g')
   let selected = substitute(selected, "\n", " ", 'g')
   let selected = substitute(selected, " // ", " ", 'g')
   return selected
