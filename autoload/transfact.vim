@@ -21,10 +21,10 @@ function! transfact#open_floating_window() range
 
   let selected = substitute(selected, '\"', '\\"', 'g')
   let selected = substitute(selected, "\'", "\\'", 'g')
-  let cmd = 'echo "' . selected . "\"| perl -pe 's/^ *\/\/(.*)$/$1/g; s/(.*?)\n/$1/g'"
-  echom cmd
+  let selected = substitute(selected, "\n", " ", 'g')
+  let selected = substitute(selected, " // ", " ", 'g')
+  let cmd = 'echo "' . selected . "\" | perl -pe 's/^ *\\/\\/(.*)$/$1/g;'"
   let selected = system(cmd)
-  echom selected
 
   " to open floating window
   let bufnr = bufnr('%')
@@ -36,11 +36,12 @@ function! transfact#open_floating_window() range
     call nvim_open_win(bufnr, v:true, 200, 20, {'relative': 'editor', 'row': 7, 'col': 7})
     enew
     let g:transfact_buf = bufnr('%')
-	  setlocal buftype=nofile
-	  setlocal bufhidden=hide
-	  setlocal noswapfile
-	  setlocal nobuflisted
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+    setlocal nobuflisted
     setlocal undolevels=-1
+    " setlocal modifiable=off
   endif
   
   " checkout translation buffer
@@ -53,7 +54,11 @@ function! transfact#open_floating_window() range
 
   " write to translation buffer
   let text = transfact#translate(selected)
-  execute "normal i" . text
+  call append('$', '*** original')
+  call append('$', selected)
+  call append('$', '')
+  call append('$', '*** translated')
+  call append('$', text)
 endfunction
 
 

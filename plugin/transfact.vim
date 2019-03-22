@@ -21,7 +21,7 @@ call remote#host#RegisterPlugin('transfact.nvim', '0', [
 " for initialize
 call InitializeTransfact()
 
-vnoremap <C-t>r <C-u>:call transfact#open_floating_window()<CR>
+vnoremap <C-t>r :call transfact#open_floating_window()<CR>
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

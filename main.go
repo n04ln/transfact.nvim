@@ -72,7 +72,6 @@ func translate(nimvle *nimvle.Nimvle, text string) (string, error) {
 	q.Set("source", "en")
 	q.Set("target", "ja")
 	u.RawQuery = q.Encode()
-	nimvle.Log(u.RawQuery)
 
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
