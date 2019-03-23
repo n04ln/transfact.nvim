@@ -29,14 +29,12 @@ function! transfact#remove_unncessary_chars(selected)
   let selected = substitute(selected, '\"', '\\"', 'g')
   let selected = substitute(selected, "`", "\\\\`", 'g')
   let selected = substitute(selected, "\n", " ", 'g')
-  let selected = substitute(selected, " // ", " ", 'g')
+  let selected = substitute(selected, "//", " ", 'g')
   return selected
 endfunction
 
 function! transfact#shape_selected_string(selected)
   let selected = transfact#remove_unncessary_chars(a:selected)
-  let cmd = 'echo "' . selected . "\" | perl -pe 's/^ *\\/\\/(.*)$/$1/g;'"
-  let selected = system(cmd)
   return selected
 endfunction
 
