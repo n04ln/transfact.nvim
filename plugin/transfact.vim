@@ -14,13 +14,17 @@ endfunction
 
 call remote#host#Register('transfact.nvim', '0', function('s:Requiretransfact'))
 call remote#host#RegisterPlugin('transfact.nvim', '0', [
-\ {'type': 'function', 'name': 'InitializeTransfact', 'sync': 1, 'opts': {}},
-\ {'type': 'function', 'name': 'Trans', 'sync': 1, 'opts': {}},
+\ {'type': 'function', 'name': 'Transfact', 'sync': 1, 'opts': {}},
 \ ])
 
-" for initialize
-call InitializeTransfact()
+function! transfact#transfact_win_close() abort
+  if exists('g:transfact_win')
+    call nvim_win_close(g:transfact_win, v:true)
+  endif
+endfunction
 
+" for auto close window when leave transfact window
+autocmd WinLeave transfact :call transfact#transfact_win_close()
 vnoremap <silent><C-t>r :call transfact#translate()<CR>
 
 let &cpo = s:save_cpo
