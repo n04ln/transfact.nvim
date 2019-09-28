@@ -19,7 +19,7 @@ call remote#host#RegisterPlugin('transfact.nvim', '0', [
 \ ])
 
 " for initialize
-call InitializeTransfact()
+" call InitializeTransfact()
 
 vnoremap <silent><C-t>r :call transfact#translate()<CR>
 

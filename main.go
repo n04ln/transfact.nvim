@@ -18,24 +18,15 @@ type Config struct {
 var c Config
 
 func main() {
+	err := envconfig.Process("TRANSFACT", &c)
+	if err != nil {
+		panic(err) // failed initialize
+	}
 
 	plugin.Main(
 		func(p *plugin.Plugin) error {
 			p.HandleFunction(
-				&plugin.FunctionOptions{Name: "InitializeTransfact"},
-				// Setting from env variable.
-				func(v *nvim.Nvim, args []string) (string, error) {
-					nimvle := nimvle.New(v, "transfact")
-					err := envconfig.Process("TRANSFACT", &c)
-					if err != nil {
-						nimvle.Log(err)
-						panic(err) // failed initialize
-					}
-
-					return "", nil
-				})
-			p.HandleFunction(
-				&plugin.FunctionOptions{Name: "Trans"},
+				&plugin.FunctionOptions{Name: "Transfact"},
 				// Translate args string.
 				func(v *nvim.Nvim, args []string) (string, error) {
 					nimvle := nimvle.New(v, "transfact")
