@@ -14,7 +14,7 @@ endfunction
 
 call remote#host#Register('transfact.nvim', '0', function('s:Requiretransfact'))
 call remote#host#RegisterPlugin('transfact.nvim', '0', [
-\ {'type': 'function', 'name': 'Transfact', 'sync': 1, 'opts': {}},
+\ {'type': 'function', 'name': 'Transfact', 'sync': 1, 'opts': {'nargs':'*'}},
 \ ])
 
 function! transfact#transfact_win_close() abort
@@ -25,7 +25,8 @@ endfunction
 
 " for auto close window when leave transfact window
 autocmd WinLeave transfact :call transfact#transfact_win_close()
-vnoremap <silent><C-t>r :call transfact#translate()<CR>
+vnoremap <silent><C-t>e :call transfact#translate("en", "ja")<CR>
+vnoremap <silent><C-t>j :call transfact#translate("ja", "en")<CR>
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

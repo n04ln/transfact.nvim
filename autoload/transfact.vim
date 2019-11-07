@@ -16,9 +16,9 @@ let g:margin = 7
 hi ActiveWindow guibg=#111111
 hi InactiveWindow guibg=#0D1B22
 
-function! transfact#trans(selected) range
+function! transfact#trans(selected, src, dst) range
   " this function is written by Golang (see main.go)
-  return Transfact(a:selected)
+  return Transfact(a:selected, a:src, a:dst)
 endfunction
 
 function! transfact#selected() range
@@ -49,7 +49,7 @@ function! transfact#show_floating_win()
   endif
 endfunction
 
-function! transfact#translate() range
+function! transfact#translate(src, dst) range
   " to get text of visual selected
   let selected = transfact#selected()
 
@@ -72,7 +72,7 @@ function! transfact#translate() range
   setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
 
   " overwrite content to buffer
-  let text = transfact#trans(selected)
+  let text = transfact#trans(selected, a:src, a:dst)
   call nvim_buf_set_lines(g:transfact_buf, 0, -1, v:true, ["original:", selected, "", "after:", text])
 endfunction
 

@@ -30,8 +30,8 @@ func main() {
 				// Translate args string.
 				func(v *nvim.Nvim, args []string) (string, error) {
 					nimvle := nimvle.New(v, "transfact")
-					if len(args) != 1 {
-						nimvle.Log("args length is not 1")
+					if len(args) != 3 {
+						nimvle.Log("args length is not 3")
 						return "", nil
 					}
 					if c.AppURL == "" {
@@ -39,7 +39,11 @@ func main() {
 						return "", nil
 					}
 
-					text, err := translate(nimvle, args[0])
+					text := args[0]
+					src := args[1]
+					dst := args[2]
+
+					text, err := translate(nimvle, text, src, dst)
 					if err != nil {
 						nimvle.Log(err)
 						return "", nil
@@ -51,7 +55,7 @@ func main() {
 		})
 }
 
-func translate(nimvle *nimvle.Nimvle, text string) (string, error) {
+func translate(nimvle *nimvle.Nimvle, text, src, dst string) (string, error) {
 	client := http.DefaultClient
 
 	u, err := url.Parse(c.AppURL)
@@ -60,8 +64,8 @@ func translate(nimvle *nimvle.Nimvle, text string) (string, error) {
 	}
 	q := u.Query()
 	q.Set("text", text)
-	q.Set("source", "en")
-	q.Set("target", "ja")
+	q.Set("source", src)
+	q.Set("target", dst)
 	u.RawQuery = q.Encode()
 
 	req, err := http.NewRequest("GET", u.String(), nil)
