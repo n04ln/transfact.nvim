@@ -5,7 +5,7 @@ For translation(En-Ja) in NeoVim
 [![asciicast](https://asciinema.org/a/6I68Wftec0YslkvWMl9lkh4mk.svg)](https://asciinema.org/a/6I68Wftec0YslkvWMl9lkh4mk)
 
 ## Requred
-- NeoVim > v0.4.2
+- NeoVim >= v0.4.2
 - GoogleAppsScript environment (under‐mentioned)
 - go >= 1.11 (go modules supported)
 
