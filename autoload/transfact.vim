@@ -9,11 +9,11 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " TODO: Optimize it!
-let g:w = 100
+" let g:w = 75
 let g:h = 20
 let g:margin = 7
 
-hi ActiveWindow guibg=#111111
+hi ActiveWindow guibg=#444444
 hi InactiveWindow guibg=#0D1B22
 
 function! transfact#trans(selected, src, dst) range
@@ -36,14 +36,19 @@ function! transfact#selected() range
 endfunction
 
 function! transfact#show_floating_win()
+  let opt = {'relative': 'editor',
+        \ 'width': nvim_win_get_width(0)-g:margin*2,
+        \ 'height': g:h,
+        \ 'row': g:margin,
+        \ 'col': g:margin,
+        \ 'anchor': 'NW',
+        \ 'style': 'minimal'}
   if exists('g:transfact_buf')
-    let opt = {'relative': 'editor', 'width': g:w, 'height': g:h, 'row': g:margin, 'col': g:margin, 'anchor': 'NW', 'style': 'minimal'}
     let w = nvim_open_win(g:transfact_buf, 0, opt)
     return w
   else
     " open floating window
     let g:transfact_buf = nvim_create_buf(v:false, v:true)
-    let opt = {'relative': 'editor', 'width': g:w, 'height': g:h, 'row': g:margin, 'col': g:margin, 'anchor': 'NW', 'style': 'minimal'}
     let w = nvim_open_win(g:transfact_buf, 0, opt)
     return w
   endif
@@ -73,7 +78,7 @@ function! transfact#translate(src, dst) range
 
   " overwrite content to buffer
   let text = transfact#trans(selected, a:src, a:dst)
-  call nvim_buf_set_lines(g:transfact_buf, 0, -1, v:true, ["original:", selected, "", "after:", text])
+  call nvim_buf_set_lines(g:transfact_buf, 0, -1, v:true, [" original:", selected, "", " after:", text])
 endfunction
 
 let &cpo = s:save_cpo
