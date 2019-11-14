@@ -36,4 +36,4 @@ Let's Enjoy!
 
 ## Usage
 1. please select target using visual mode.
-2. stroke `<C-t>r` to show floating window with the texts.
+2. stroke `<C-t>e` to show floating window with the texts that is translate from English to Japanese.
